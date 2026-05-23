@@ -18,7 +18,9 @@ make package/quickfile/luci-app-quickfile/compile V=s
 
 ---
 
-**禁用不可信的 SSL 证书（浏览器会拒绝通过不可信证书获取 Session ID）**
+## 相关设置
+
+ - **禁用不可信的 SSL 证书（浏览器会拒绝通过不可信证书获取 Session ID）**
 
 ```nginx
 # nginx
@@ -36,6 +38,12 @@ uci commit nginx
 service nginx restart
 ```
 
+ - **文件上传大小受限**
+
+通过编辑 `/etc/nginx/conf.d/quickfile.locations` 文件并修改 `client_body_temp_path` 临时目录为大容量目录可避免文件上传大小受限而失败。
+
+https://github.com/sbwml/luci-app-quickfile/blob/5d863b91bc1d555dea65ecce6e30786c7d12273e/quickfile/files/quickfile.locations#L1-L8
+
 ---
 
 ## 功能简介
@@ -43,6 +51,7 @@ service nginx restart
 ### 文件管理
 - 基础操作：支持目录浏览、文件/文件夹的创建、重命名、移动和删除。
 - 便捷传输：提供标准的文件上传与下载功能，并支持通过浏览器拖拽直接上传文件，同时支持在线下载文件。
+- 解压缩：支持 `zip`、`tar.gz`、`tar.xz` 文件的压缩/解压。
 
 ### 命令终端
 - 实时命令行：内置网页终端功能，支持直接在管理界面中执行当前目录系统命令，便于用户进行快速批量操作文件、调试与系统维护。
